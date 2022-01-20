@@ -4,10 +4,10 @@ export default function Navbar(){
     return(
         <nav>
             <h1>
-                <Link to="/budget">Budget App</Link>
+                <Link to="/transactions">Budget App</Link>
             </h1>
             <button>
-                <Link to="/budget/new">New Transaction</Link>
+                <Link to="/transactions/new">New Transaction</Link>
             </button>
         </nav>
     );
