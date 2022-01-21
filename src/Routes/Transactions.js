@@ -4,22 +4,27 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-function Transactions() {
+function Transactions(){
     const [transactions, setTransactions] = useState([]);
+    const [totalArr, setTotalArr] = useState(0);
 
     useEffect(() => {
         axios.get(`${API_URL}/transactions`)
         .then((res) => {
-            console.log(res.data);
             setTransactions(res.data);
+            amountTotal(res.data);
         })
-        .catch((err) => {
-            throw err;
-        });
+        .catch((err) => {throw err});
     }, []);
+
+    const amountTotal = (totalArr) => {
+        // totalArr.map(total => total.amount).reduce((a,b) => a + b)
+        setTotalArr(totalArr.map(total => total.amount).reduce((a,b) => a + b))
+    }
 
     return (
         <div className="Transactions">
+            <h2>Bank Account Total: {totalArr} </h2>
             <section>
                 <table>
                     <tbody>
