@@ -29,7 +29,7 @@ function TransactionEditForm() {
         e.preventDefault();
         axios.put(`${API_URL}/tranactions/${index}`, transaction)
         .then(() => navigate(`/transactions/${index}`))
-        .catch((err) => console.log(err))
+        .catch((err) => console.log(err));
     };
 
   return (
