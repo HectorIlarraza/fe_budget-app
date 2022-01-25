@@ -1,0 +1,37 @@
+// Overwrite theme variables
+// Better-looking theme colors
+
+$theme-colors: (
+    "primary": #212529,
+    "secondary": green,
+    "dark": #300,
+    "light": #fdd,
+    "success": rebeccapurple,
+    "info": #555,
+    "warning": orange,
+    "danger": red,
+);
+
+$color-void: #212529;
+
+.table-bordered {
+    border: 5px double orange !important;
+}
+
+.Transaction tr:hover {
+    background-color: green!important;
+}
+
+body {
+ background-color: $color-void!important;
+}
+
+.details {
+    background-color: orange!important;
+}
+
+// .form-text {
+//     background-color: white;
+// }
+
+@import "~bootstrap/scss/bootstrap.scss";

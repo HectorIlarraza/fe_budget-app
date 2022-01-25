@@ -1,82 +1,105 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Card, Form, Button } from "react-bootstrap";
+import axios from "axios";
+import bowserBank from "../assets/bowserBank.jpeg";
 
 function TransactionNewForm() {
-    const [transaction, setTransaction] = useState({
-        date: "",
-        item_name: "",
-        amount: 0,
-        from: "",
-        category: "",
-    });
-    const navigate = useNavigate();
-    const API_URL = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL;
 
-    const handleTextChange = (e) => {
-        setTransaction({...transaction, [e.target.id]: e.target.value});
-    };
+  const [transaction, setTransaction] = useState({
+    date: "",
+    itemName: "",
+    amount: 0,
+    from: "",
+    category: "",
+  });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post(`${API_URL}/transactions`, transaction)
-        .then(() => navigate("/transactions"))
-        .catch((err) => console.log(err));
-    };
+  const handleTextChange = (e) => {
+    setTransaction({ ...transaction, [e.target.id]: e.target.value });
+  };
 
-    return (
-        <div className="New">
-            <form onChange={handleSubmit}>
-                <label htmlFor="date">Date</label>
-                <input 
-                    id="date"
-                    value={transaction.date}
-                    type="text"
-                    onChange={handleTextChange}
-                    placeholder="date of transaction"
-                    required 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${API_URL}/transactions`, transaction)
+      .then((res) => {
+        navigate("/transactions");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div className="New">
+      <Card className="bg-dark text-white">
+        <Card.Img src={bowserBank} alt="Card image" object-fit="cover" />
+        <Card.ImgOverlay>
+          <Card.Title>
+            <h1>Add a new coin transaction</h1>
+          </Card.Title>
+          <Card.Text>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="date">Date</Form.Label>
+                <Form.Control
+                  id="date"
+                  type="date"
+                  onChange={handleTextChange}
                 />
-                <label htmlFor="item_name">Name</label>
-                <input 
-                    id="item_name"
-                    value={transaction.item_name}
-                    type="text"
-                    onChange={handleTextChange}
-                    placeholder="type of transaction"
-                    required 
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="itemName">Name</Form.Label>
+                <Form.Control
+                  id="itemName"
+                  type="text"
+                  onChange={handleTextChange}
+                  placeholder="Name of transaction"
                 />
-                <label htmlFor="amount">Amount</label>
-                <input 
-                    id="amount"
-                    value={transaction.amount}
-                    type="number"
-                    onChange={handleTextChange}
-                    placeholder="amount of transaction"
-                    required 
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="amount">Amount</Form.Label>
+                <Form.Control
+                  id="amount"
+                  min="0.01"
+                  step="0.01"
+                  max="10000000"
+                  type="number"
+                  onChange={handleTextChange}
+                  placeholder="0"
                 />
-                <label htmlFor="from">From</label>
-                <input 
-                    id="from"
-                    value={transaction.from}
-                    type="text"
-                    onChange={handleTextChange}
-                    placeholder="location of transaction"
-                    required 
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="from">From</Form.Label>
+                <Form.Control
+                  id="from"
+                  type="text"
+                  onChange={handleTextChange}
+                  placeholder="Location of transaction"
                 />
-                <label htmlFor="category">Category</label>
-                <input
-                    id="category"
-                    value={transaction.category}
-                    type="text"
-                    onChange={handleTextChange}
-                    placeholder="type of transaction"
-                    required
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="category">Category</Form.Label>
+                <Form.Control
+                  id="category"
+                  type="text"
+                  onChange={handleTextChange}
+                  placeholder="Type of transaction"
                 />
-                <br />
-                <input type="submit" />
-            </form>
-        </div>
-    )
+              </Form.Group>
+              <br />
+              <br />
+              <Button variant="success" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Card.Text>
+        </Card.ImgOverlay>
+      </Card>
+    </div>
+  );
 }
 
 export default TransactionNewForm;
